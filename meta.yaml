@@ -1,0 +1,42 @@
+{% set name = "scwrl" %}
+{% set version = "4.0" %}
+# sha256 is the prefered checksum -- you can get it for a file with:
+#  `openssl sha256 <file name>`.
+# You may need the openssl package, available on conda-forge
+#  `conda install openssl -c conda-forge``
+
+package:
+  name: {{ name | lower }}
+  version: {{ version }}
+
+source:
+  path: install_Scwrl4_Linux
+  sha256: 7119a244299d4872aa6b394ffae7eeecfe5de62ac74970cd71c4e91ac65e7546
+
+build:
+  script: |
+    # Read full name of current user from /etc/passwd
+    user=$(getent passwd "$USER" | cut -d ':' -f 5 | cut -d ',' -f 1)
+    # Pass install dir, confirmation and user name to installer stdin
+    printf "%s\nY\n%s\n" "$PREFIX/bin" "$user" | ./install_Scwrl4_Linux
+    # Install ancilliary files to /share/scwrl4
+    # and data files to /share/scwrl4/data
+    install -d "$PREFIX/share/scwrl4/"{,data}
+    mv "$PREFIX/bin/"{Agreement,Readme,QuickStart}.txt "$PREFIX/share/scwrl4"
+    mv "$PREFIX/bin/Scwrl4.ini" "$PREFIX/share/scwrl4"
+    mv "$PREFIX/bin/bbDepRotLib.bin" "$PREFIX/share/scwrl4/data"
+    rm "$PREFIX/bin/abcd_IN.pdb"
+
+    # Set path of backbone-dependent rotamer library in ini file
+    sed -i "/^\tFilePath/ s|=.*\$|= $PREFIX/share/scwrl4/data/bbDepRotLib.bin|" \
+        "$PREFIX/share/scwrl4/Scwrl4.ini"
+
+    # Symlink ini file into same dir as binary so it can be found
+    ln -s "$PREFIX/share/scwrl4/Scwrl4.ini" "$PREFIX/bin"
+  script_env:
+  - USER
+
+
+about:
+  home: http://dunbrack.fccc.edu/scwrl4/index.php
+  license: proprietary
