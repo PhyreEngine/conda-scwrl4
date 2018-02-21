@@ -15,11 +15,10 @@ source:
 
 build:
   script: |
-    # Read full name of current user from /etc/passwd
-    user=$(getent passwd "$USER" | cut -d ':' -f 5 | cut -d ',' -f 1)
+    # Read full name of licence holder from SCWRL_USER env var
     # Pass install dir, confirmation and user name to installer stdin
     chmod u+x ./install_Scwrl4_Linux
-    printf "%s\nY\n%s\n" "$PREFIX/bin" "$user" | ./install_Scwrl4_Linux
+    printf "%s\nY\n%s\n" "$PREFIX/bin" "$SCWRL_USER" | ./install_Scwrl4_Linux
     # Install ancilliary files to /share/scwrl4
     # and data files to /share/scwrl4/data
     install -d "$PREFIX/share/scwrl4/"{,data}
@@ -34,8 +33,6 @@ build:
 
     # Symlink ini file into same dir as binary so it can be found
     ln -s "$PREFIX/share/scwrl4/Scwrl4.ini" "$PREFIX/bin"
-  script_env:
-  - USER
 
 
 about:

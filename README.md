@@ -14,7 +14,9 @@ This repository contains a [conda][conda] recipe for installing
 ## Building
 
 You should be able to build this package by simply running `conda build .`
-after placing the installer in the same directory as `meta.yaml`.
+after placing the installer (`install_Scwrl4_Linux`) in the same directory as
+`meta.yaml`. You will also need to set the `$SCWRL_USER` environment variable
+to the name of the SCWRL licence holder.
 
 [conda]: https://conda.io
 [scwrl]: http://dunbrack.fccc.edu/scwrl4/
