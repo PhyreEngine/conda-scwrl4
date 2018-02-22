@@ -1,5 +1,5 @@
 pipeline {
-  agent any
+  agent { label 'conda-build' }
   environment {
     tmpdir = "${pwd tmp: true}"
   }
