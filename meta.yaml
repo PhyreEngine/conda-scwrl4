@@ -14,6 +14,7 @@ source:
   sha256: 7119a244299d4872aa6b394ffae7eeecfe5de62ac74970cd71c4e91ac65e7546
 
 build:
+  number: {{ environ.get("BUILD_NUMBER", 0) }}
   script: |
     # Read full name of licence holder from SCWRL_USER env var
     # Pass install dir, confirmation and user name to installer stdin
