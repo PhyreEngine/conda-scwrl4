@@ -13,10 +13,16 @@ This repository contains a [conda][conda] recipe for installing
 
 ## Building
 
-You should be able to build this package by simply running `conda build .`
-after placing the installer (`install_Scwrl4_Linux`) in the same directory as
-`meta.yaml`. You will also need to set the `$SCWRL_USER` environment variable
-to the name of the SCWRL licence holder.
+You will need to set the `$CONDA_SOURCES` environment variable to a path
+containing the SCWRL4 installer, which should be placed in
+`$CONDA_SOURCES/conda-scwrl4/install_Scwrl4_Linux`. You will also need to set
+the `$SCWRL_USER` environment variable to the name of the SCWRL licence holder.
+
+You can then build this package by running `./pre-build.sh && conda build .`.
+
+If you are using the provided `Jenkinsfile` to build the package, you will need
+to set the `conda-sources` and `scwrl-user` credentials, which in turn set the
+`$CONDA_SOURCES` and `$SCWRL_USER` environment variables.
 
 [conda]: https://conda.io
 [scwrl]: http://dunbrack.fccc.edu/scwrl4/
