@@ -18,4 +18,6 @@ if [[ -z "$SCWRL_USER" ]]; then
     exit 1
 fi
 
+set -x
 cp -v "$CONDA_SOURCES/$scwrl_installer" .
+conda build .

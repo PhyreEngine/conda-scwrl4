@@ -10,12 +10,22 @@ pipeline {
           string(credentialsId: 'conda-sources', variable: 'CONDA_SOURCES'),
           string(credentialsId: 'scwrl-user', variable: 'SCWRL_USER')
         ]) {
-          sh 'if [ -e pre-build.sh ]; then ./pre-build.sh; fi'
-          sh '''#!/bin/bash
-set -e
-conda build . --cache-dir ${tmpdir}
-'''
-          sh 'if [ -e post-build.sh ]; then ./post-build.sh; fi'
+          lock('conda-index') {
+              sh './build'
+          }
+        }
+      }
+      post {
+        failure {
+          withCredentials([string(credentialsId: 'email-recipients', variable: 'EMAIL_RECIPIENTS')]) {
+            emailext (
+                attachLog: true,
+                to: "${EMAIL_RECIPIENTS}",
+                subject: "FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                body: """Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' failed.
+Check console output at ${env.BUILD_URL}."""
+            )
+          }
         }
       }
     }

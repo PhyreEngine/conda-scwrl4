@@ -18,7 +18,7 @@ containing the SCWRL4 installer, which should be placed in
 `$CONDA_SOURCES/conda-scwrl4/install_Scwrl4_Linux`. You will also need to set
 the `$SCWRL_USER` environment variable to the name of the SCWRL licence holder.
 
-You can then build this package by running `./pre-build.sh && conda build .`.
+You can then build this package by running `./build`.
 
 If you are using the provided `Jenkinsfile` to build the package, you will need
 to set the `conda-sources` and `scwrl-user` credentials, which in turn set the
