@@ -14,8 +14,7 @@ This repository contains a [conda][conda] recipe for installing
 ## Building
 
 You will need to set the `$CONDA_SOURCES` environment variable to a path
-containing the SCWRL4 installer, which should be placed in
-`$CONDA_SOURCES/conda-scwrl4/install_Scwrl4_Linux`. You will also need to set
+containing the SCWRL4 installer. You will also need to set
 the `$SCWRL_USER` environment variable to the name of the SCWRL licence holder.
 
 You can then build this package by running `./build`.

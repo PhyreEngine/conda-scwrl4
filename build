@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-scwrl_installer="conda-scwrl4/install_Scwrl4_Linux"
+scwrl_installer="install_Scwrl4_Linux"
 if [[ ! ( -n "$CONDA_SOURCES" && -e "$CONDA_SOURCES/$scwrl_installer" ) ]]; then
     echo "Environment variable CONDA_SOURCES must be set and"\
          "\$CONDA_SOURCES/$scwrl_installer must exist."\
